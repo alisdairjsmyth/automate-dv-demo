@@ -20,6 +20,7 @@ target-path: target
 
 vars:
   load_date: '1992-01-08'
+  # Automate DV hashing parameters
   hash: SHA
   concat_string: '||'
   null_placeholder_string: '^^'
@@ -27,24 +28,21 @@ vars:
   enable_native_hashes: true
 
 flags:
+  # Databricks adapter flags
   use_materialization_v2: true
 
 models:
+  # Persist dbt descriptions to Unity Catalog
   +persist_docs:
     relation: true
     columns: true
+
   dbtvault_databricks_demo:
     raw_stage:
       +materialized: view
       +tags:
         - 'raw'
-    stage:
-      +materialized: view
-      +tags:
-        - 'stage'
-      +enabled: true
-      +contract:
-        enforced: true
+
     raw_vault:
       +materialized: incremental
       +tags:
@@ -52,12 +50,14 @@ models:
       hubs:
         +tags:
           - 'hub'
+        # Enforce data contract checks for Raw Vault Hubs
         +on_schema_change: fail
         +contract:
           enforced: true
       links:
         +tags:
           - 'link'
+        # Enforce data contract checks for Raw Vault Links
         +on_schema_change: fail
         +contract:
           enforced: true
@@ -67,3 +67,11 @@ models:
       t_links:
         +tags:
           - 't_link'
+
+    stage:
+      +materialized: view
+      +tags:
+        - 'stage'
+      +enabled: true
+      +contract:
+        enforced: true
