@@ -1,0 +1,113 @@
+version: 2
+
+anchors:
+  - &hub_src_pk
+      name: src_pk # Must be overwritten by merge
+      data_type: binary
+      constraints:
+        - type: primary_key
+          warn_unenforced: false
+        - type: not_null
+      data_tests:
+        - not_null
+        - unique
+
+  - &hub_src_nk
+      name: src_nk # Must be overwritten by merge
+      data_type: bigint
+
+  - &hub_src_ldts
+      name: load_date
+      description: "Date record was loaded"
+      data_type: date
+      constraints:
+        - type: not_null
+
+  - &hub_src_source
+      name: record_source
+      description: "The source of the record"
+      data_type: string
+      constraints:
+        - type: not_null
+
+models:
+  - name: hub_customer
+    columns:
+      - <<: *hub_src_pk
+        name: customer_pk
+        description: "Internal hashed column of customer key"
+      - <<: *hub_src_nk
+        name: customerkey
+        description: "Natural key identifiying the customer who placed the order"
+      - *hub_src_ldts
+      - *hub_src_source
+
+  - name: hub_lineitem
+    columns:
+      - <<: *hub_src_pk
+        name: lineitem_pk
+        description: "Internal hashed column of order key and order line number"
+      - <<: *hub_src_nk
+        name: linenumber
+        description: "The line number of the item within the order"
+        data_type: int
+      - <<: *hub_src_nk
+        name: orderkey
+        description: "The unique identifier for the order"
+      - *hub_src_ldts
+      - *hub_src_source
+
+  - name: hub_nation
+    columns:
+      - <<: *hub_src_pk
+        name: nation_pk
+        description: "Internal hashed column of nation key"
+      - <<: *hub_src_nk
+        name: nation_key
+        description: "The identifier for the nation"
+      - *hub_src_ldts
+      - *hub_src_source
+
+  - name: hub_order
+    columns:
+      - <<: *hub_src_pk
+        name: order_pk
+        description: "Internal hashed column of order key"
+      - <<: *hub_src_nk
+        name: orderkey
+        description: "The unique identifier for the order"
+      - *hub_src_ldts
+      - *hub_src_source
+
+  - name: hub_part
+    columns:
+      - <<: *hub_src_pk
+        name: part_pk
+        description: "Internal hashed column of part key"
+      - <<: *hub_src_nk
+        name: partkey
+        description: "A unique identifier for the part"
+      - *hub_src_ldts
+      - *hub_src_source
+
+  - name: hub_region
+    columns:
+      - <<: *hub_src_pk
+        name: region_pk
+        description: "Internal hashed column of region key"
+      - <<: *hub_src_nk
+        name: region_key
+        description: "The identifier for the region"
+      - *hub_src_ldts
+      - *hub_src_source
+
+  - name: hub_supplier
+    columns:
+      - <<: *hub_src_pk
+        name: supplier_pk
+        description: "Internal hashed column of supplier key"
+      - <<: *hub_src_nk
+        name: supplierkey
+        description: "A unique identifier for the supplier"
+      - *hub_src_ldts
+      - *hub_src_source

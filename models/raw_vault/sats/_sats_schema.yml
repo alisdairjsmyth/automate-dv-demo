@@ -1,0 +1,255 @@
+version: 2
+
+anchors:
+  - &sat_src_pk
+      name: src_pk                    # Must be overwritten by merge
+      data_type: binary
+      constraints:                    # Must be overwritten by merge
+        - type: not_null
+        - type: foreign_key           # Must be overwritten by merge
+          to: relation                # Must be overwritten by merge
+          to_columns: list_of_columns # Must be overwritten by merge
+          warn_unenforced: false
+      data_tests:                     # Must be overwritten by merge
+        - relationships:              # Must be overwritten by merge
+            arguments:                # Must be overwritten by merge
+              to: relation            # Must be overwritten by merge
+              field: column           # Must be overwritten by merge
+
+  - &sat_src_hashdiff
+      name: src_hashdiff              # Must be overwritten by merge
+      data_type: binary
+      constraints:
+        - type: not_null
+
+  - &sat_src_eff
+      name: effective_from
+      description: "Effective date of record"
+      data_type: date
+      constraints:
+        - type: not_null
+
+  - &sat_src_ldts
+      name: load_date
+      description: "Date record was loaded"
+      data_type: date
+      constraints:
+        - type: not_null
+
+  - &sat_src_source
+      name: record_source
+      description: "Record source label"
+      data_type: string
+      constraints:
+        - type: not_null
+
+models:
+  - name: sat_inv_inventory_details
+    columns:
+      - <<: *sat_src_pk
+        name: inventory_pk
+        description: "Internal hashed column of part key and supplier key"
+        constraints:
+          - type: foreign_key
+            to: ref('link_inventory')
+            to_columns: [inventory_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('link_inventory')
+                field: inventory_pk
+      - <<: *sat_src_hashdiff
+        name: inventory_hashdiff
+        description: ""
+      - *sat_src_eff
+      - *sat_src_ldts
+      - *sat_src_source
+
+  - name: sat_inv_part_details
+    columns:
+      - <<: *sat_src_pk
+        name: part_pk
+        description: "Internal hashed column of part key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_part')
+            to_columns: [part_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_part')
+                field: part_pk
+      - <<: *sat_src_hashdiff
+        name: part_hashdiff
+        description: ""
+      - *sat_src_eff
+      - *sat_src_ldts
+      - *sat_src_source
+
+  - name: sat_inv_supp_nation_details
+    columns:
+      - <<: *sat_src_pk
+        name: supplier_pk
+        description: "Internal hashed column of supplier key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_supplier')
+            to_columns: [supplier_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_supplier')
+                field: supplier_pk
+      - <<: *sat_src_hashdiff
+        name: supplier_nation_hashdiff
+        description: ""
+      - *sat_src_eff
+      - *sat_src_ldts
+      - *sat_src_source
+
+  - name: sat_inv_supp_region_details
+    columns:
+      - <<: *sat_src_pk
+        name: supplier_pk
+        description: "Internal hashed column of supplier key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_supplier')
+            to_columns: [supplier_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_supplier')
+                field: supplier_pk
+      - <<: *sat_src_hashdiff
+        name: supplier_region_hashdiff
+        description: ""
+      - *sat_src_eff
+      - *sat_src_ldts
+      - *sat_src_source
+
+  - name: sat_inv_supplier_details
+    columns:
+      - <<: *sat_src_pk
+        name: supplier_pk
+        description: "Internal hashed column of supplier key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_supplier')
+            to_columns: [supplier_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_supplier')
+                field: supplier_pk
+      - <<: *sat_src_hashdiff
+        name: supplier_hashdiff
+        description: ""
+      - *sat_src_eff
+      - *sat_src_ldts
+      - *sat_src_source
+
+  - name: sat_order_cust_nation_details
+    columns:
+      - <<: *sat_src_pk
+        name: customer_pk
+        description: "Internal hashed column of customer key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_customer')
+            to_columns: [customer_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_customer')
+                field: customer_pk
+      - <<: *sat_src_hashdiff
+        name: customer_nation_hashdiff
+        description: ""
+      - *sat_src_eff
+      - *sat_src_ldts
+      - *sat_src_source
+
+  - name: sat_order_cust_region_details
+    columns:
+      - <<: *sat_src_pk
+        name: customer_pk
+        description: "Internal hashed column of customer key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_customer')
+            to_columns: [customer_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_customer')
+                field: customer_pk
+      - <<: *sat_src_hashdiff
+        name: customer_region_hashdiff
+        description: ""
+      - *sat_src_eff
+      - *sat_src_ldts
+      - *sat_src_source
+
+  - name: sat_order_customer_details
+    columns:
+      - <<: *sat_src_pk
+        name: customer_pk
+        description: "Internal hashed column of customer key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_customer')
+            to_columns: [customer_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_customer')
+                field: customer_pk
+      - <<: *sat_src_hashdiff
+        name: customer_hashdiff
+        description: ""
+      - *sat_src_eff
+      - *sat_src_ldts
+      - *sat_src_source
+
+  - name: sat_order_lineitem_details
+    columns:
+      - <<: *sat_src_pk
+        name: lineitem_pk
+        description: "Internal hashed column of order key and order line number"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_lineitem')
+            to_columns: [lineitem_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_lineitem')
+                field: lineitem_pk
+      - <<: *sat_src_hashdiff
+        name: lineitem_hashdiff
+        description: ""
+      - *sat_src_eff
+      - *sat_src_ldts
+      - *sat_src_source
+
+  - name: sat_order_order_details
+    columns:
+      - <<: *sat_src_pk
+        name: order_pk
+        description: "Internal hashed column of order key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_order')
+            to_columns: [order_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_order')
+                field: order_pk
+      - <<: *sat_src_hashdiff
+        name: order_hashdiff
+        description: ""
+      - *sat_src_eff
+      - *sat_src_ldts
+      - *sat_src_source

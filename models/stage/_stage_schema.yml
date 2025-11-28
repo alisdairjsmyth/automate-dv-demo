@@ -1,0 +1,491 @@
+version: 2
+
+models:
+  - name: v_stg_inventory
+    description: ""
+    columns:
+      # Source Columns
+      - name: availqty
+        data_type: int
+        description: "The available quantity of the part from this specific supplier"
+
+      - name: partkey
+        data_type: bigint
+        description: "A unique identifier for the part"
+
+      - name: part_brand
+        data_type: string
+        description: "The part's brand"
+
+      - name: part_comment
+        data_type: string
+        description: "A descriptive comment about the part"
+
+      - name: part_container
+        data_type: string
+        description: "The container type"
+
+      - name: part_name
+        data_type: string
+        description: "The part's name"
+
+      - name: part_mfgr
+        data_type: string
+        description: "The part's manufacturer"
+
+      - name: part_retailprice
+        data_type: decimal(18, 2)
+        description: "The part's retail price"
+
+      - name: part_size
+        data_type: int
+        description: "The part's size or dimension"
+
+      - name: part_type
+        data_type: string
+        description: "The part's type"
+
+      - name: part_supply_comment
+        data_type: string
+        description: "A descriptive comment about part supply"
+
+      - name: supplierkey
+        data_type: bigint
+        description: "A unique identifier for the supplier"
+
+      - name: supplier_acctbal
+        data_type: decimal(18, 2)
+        description: "The supplier's account balance"
+
+      - name: supplier_address
+        data_type: string
+        description: "The supplier's address"
+
+      - name: supplier_comment
+        data_type: string
+        description: "A descriptive comment about the supplier"
+
+      - name: supplier_name
+        data_type: string
+        description: "The supplier's name"
+
+      - name: supplier_nation_comment
+        data_type: string
+        description: "A descriptive comment about the supplier's nation"
+
+      - name: supplier_nation_key
+        data_type: bigint
+        description: "The identifier of the nation where the supplier is located"
+
+      - name: supplier_nation_name
+        data_type: string
+        description: "The name of the nation where the supplier is located"
+
+      - name: supplier_phone
+        data_type: string
+        description: "The supplier's telephone number"
+
+      - name: supplier_region_comment
+        data_type: string
+        description: "A descrive comment about the supplier's region"
+
+      - name: supplier_region_key
+        data_type: bigint
+        description: "The identifier for the supplier's region"
+
+      - name: supplier_region_name
+        data_type: string
+        description: "The name of the region where the supplier is located"
+
+      - name: supplycost
+        data_type: decimal(18, 2)
+        description: "The cost of the part from this speciffic supplier"
+
+      # Derived Columns
+      - name: effective_from
+        data_type: date
+        description: "Effective date of record"
+
+      - name: load_date
+        data_type: date
+        description: "Date record was loaded"
+
+      - name: nation_key
+        data_type: bigint
+        description: "The identifier for the supplier's nation"
+
+      - name: record_source
+        data_type: string
+        description: "Record source label"
+
+      - name: region_key
+        data_type: bigint
+        description: "The identifier for the supplier's region"
+
+      # Hashed Columns
+      - name: inventory_pk
+        data_type: binary
+        description: "Internal hashed column of part key and supplier key"
+
+      - name: link_supplier_nation_pk
+        data_type: binary
+        description: "Internal hashed column of supplier key and supplier nation key"
+
+      - name: nation_pk
+        data_type: binary
+        description: "Internal hashed column of supplier region key"
+
+      - name: nation_region_pk
+        data_type: binary
+        description: "Internal hashed column of supplier nation key and supplier region key"
+
+      - name: part_pk
+        data_type: binary
+        description: "Internal hashed column of part key"
+
+      - name: region_pk
+        data_type: binary
+        description: "Internal hashed column of supplier region key"
+
+      - name: supplier_nation_pk
+        data_type: binary
+        description: "Internal hashed column of supplier nation key"
+
+      - name: supplier_pk
+        data_type: binary
+        description: "Internal hashed column of supplier key"
+
+      - name: supplier_region_pk
+        data_type: binary
+        description: "Internal hashed column of supplier region key"
+
+      # Hashdiff Columns
+      - name: inventory_hashdiff
+        data_type: binary
+        description: "Internal hashdiff of inventory attributes"
+
+      - name: part_hashdiff
+        data_type: binary
+        description: "Internal hashdiff of part attributes"
+
+      - name: supplier_hashdiff
+        data_type: binary
+        description: "Internal hashdiff of supplier attributes"
+
+      - name: supplier_nation_hashdiff
+        data_type: binary
+        description: "Internal hashdiff of supplier nation attributes"
+
+      - name: supplier_region_hashdiff
+        data_type: binary
+        description: "Internal hashdiff of supplier region attributes"
+
+  - name: v_stg_orders
+    description: ""
+    columns:
+      # Source Columns
+      - name: clerk
+        data_type: string
+        description: "The clerk who took the order"
+
+      - name: commitdate
+        data_type: date
+        description: "The date the supplier committed to deliver the item by"
+
+      - name: customerkey
+        data_type: bigint
+        description: "A key identifiying the customer who placed the order"
+
+      - name: customer_accbal
+        data_type: decimal(18, 2)
+        description: "The customer's current account balance"
+
+      - name: customer_address
+        data_type: string
+        description: "The customer's address"
+
+      - name: customer_comment
+        data_type: string
+        description: "A descriptive comment about the customer"
+
+      - name: customer_mktsegment
+        data_type: string
+        description: "The ccustomer's market segment (e.g., 'AUTOMOBILE','BUILDING')"
+
+      - name: customer_name
+        data_type: string
+        description: "The customer's name"
+
+      - name: customer_nation_comment
+        data_type: string
+        description: "A descriptive comment about the customer's nation"
+
+      - name: customer_nation_key
+        data_type: bigint
+        description: "The identifier for the customer's nation"
+
+      - name: customer_nation_name
+        data_type: string
+        description: "The name of the customer's nation"
+
+      - name: customer_phone
+        data_type: string
+        description: "The customer's telephone number"
+
+      - name: customer_region_comment
+        data_type: string
+        description: "A descriptive comment about the customer's region"
+
+      - name: customer_region_key
+        data_type: bigint
+        description: "The identifier of the customer's region"
+
+      - name: customer_region_name
+        data_type: string
+        description: "The name of the customer's region"
+
+      - name: discount
+        data_type: decimal(18, 2)
+        description: "The discount granted for the item"
+
+      - name: extendedprice
+        data_type: decimal(18, 2)
+        description: "The unit price multiplied by the quantity"
+
+      - name: linenumber
+        data_type: int
+        description: "The line number of the item within the order"
+
+      - name: linestatus
+        data_type: string
+        description: "The processing status of the item ('O' for intact, 'F' for finished)"
+
+      - name: line_comment
+        data_type: string
+        description: "A descriptive comment about the line item"
+
+      - name: orderdate
+        data_type: date
+        description: "The date the order was placed"
+
+      - name: orderkey
+        data_type: bigint
+        description: "The unique identifier for the order"
+
+      - name: orderpriority
+        data_type: string
+        description: "The priority assigned to the order (e.g. '1-URGENT', '5-LOW')"
+
+      - name: orderstatus
+        data_type: string
+        description: "The status of the order ('F' for finished, 'O' for in-progress, 'P' for pending)"
+
+      - name: order_comment
+        data_type: string
+        description: "A descriptive comment about the order"
+
+      - name: partkey
+        data_type: bigint
+        description: "The identifier for the ordered part"
+
+      - name: quantity
+        data_type: decimal(18, 2)
+        description: "The quanity of the item ordered"
+
+      - name: receiptdate
+        data_type: date
+        description: "The date the item was received"
+
+      - name: returnflag
+        data_type: string
+        description: "The return status of the item ('R' for returned, 'A' for available, 'N' for not available)"
+
+      - name: shipdate
+        data_type: date
+        description: "The date the item was shipped"
+
+      - name: shipinstruct
+        data_type: string
+        description: "Instructions for shipping (e.g. 'DELIVER IN PERSON')"
+
+      - name: shipmode
+        data_type: string
+        description: "The mode of shipping (e.g. 'RAIL','TRUCK')"
+
+      - name: shippriority
+        data_type: int
+        description: "The shipping priority (usually 0)"
+
+      - name: supplierkey
+        data_type: bigint
+        description: "The identifier for the supplier of the ordered part"
+
+      - name: tax
+        data_type: decimal(18, 2)
+        description: "The tax levied on the item"
+
+      - name: totalprice
+        data_type: decimal(18, 2)
+        description: "The total price of the order"
+
+      # Derived Columns
+      - name: customer_key
+        data_type: bigint
+        description: "The identifier for the customer"
+
+      - name: effective_from
+        data_type: date
+        description: "The effective date of the record"
+
+      - name: load_date
+        data_type: date
+        description: "Date record was loaded"
+
+      - name: nation_key
+        data_type: bigint
+        description: "The identifier for the customer's nation"
+
+      - name: record_source
+        data_type: string
+        description: "The source of the record"
+
+      - name: region_key
+        data_type: bigint
+        description: "The identifier for the customer's region"
+
+      # Hashed Columns
+      - name: customer_pk
+        data_type: binary
+        description: "Internal hashed column of customer key"
+
+      - name: customer_nation_pk
+        data_type: binary
+        description: "Internal hashed column of customer nation key"
+
+      - name: customer_region_pk
+        data_type: binary
+        description: "Internal hashed ccolumn of customer region key"
+
+      - name: inventory_allocation_pk
+        data_type: binary
+        description: "Internal hashed column of order line number, part key and supplier key"
+
+      - name: inventory_pk
+        data_type: binary
+        description: "Internal hashed column of part key and supplier key"
+
+      - name: lineitem_pk
+        data_type: binary
+        description: "Internal hashed column of order key and order line number"
+
+      - name: link_customer_nation_pk
+        data_type: binary
+        description: "Internal hashed column of customer key and customer nation key"
+
+      - name: link_lineitem_order_pk
+        data_type: binary
+        description: "Internal hashed column of order key, order key and order line number"
+
+      - name: nation_pk
+        data_type: binary
+        description: "Internal hashed column of customer nation key"
+
+      - name: nation_region_pk
+        data_type: binary
+        description: "Internal hashed column of customer nation key and customer region key"
+
+      - name: order_customer_pk
+        data_type: binary
+        description: "Internal hashed column of customer key and order key"
+
+      - name: order_pk
+        data_type: binary
+        description: "Internal hashed column of order key"
+
+      - name: part_pk
+        data_type: binary
+        description: "Internal hashed column of part key"
+
+      - name: region_pk
+        data_type: binary
+        description: "Internal hashed column of customer region key"
+
+      - name: supplier_pk
+        data_type: binary
+        description: "Internal hashed column of supplier key"
+
+      # Hashdiff Columns
+      - name: customer_hashdiff
+        data_type: binary
+        description: "Internal hashdiff of customer attributes"
+
+      - name: customer_nation_hashdiff
+        data_type: binary
+        description: "Internal hashdiff of customer nation attributes"
+
+      - name: customer_region_hashdiff
+        data_type: binary
+        description: "Internal hashdiff of customer region attributes"
+
+      - name: lineitem_hashdiff
+        data_type: binary
+        description: "Internal hashdiff of order line attributes"
+
+      - name: order_hashdiff
+        data_type: binary
+        description: "Internal hashdiff of order attributes"
+
+  - name: v_stg_transactions
+    description: ""
+    columns:
+      - name: order_id
+        data_type: bigint
+        description: ""
+
+      - name: customer_id
+        data_type: bigint
+        description: ""
+
+      - name: order_date
+        data_type: date
+        description: ""
+
+      - name: amount
+        data_type: decimal(18, 2)
+        description: ""
+
+      - name: transaction_date
+        data_type: timestamp
+        description: ""
+
+      - name: transaction_number
+        data_type: decimal(1, 0)
+        description: ""
+
+      - name: transaction_type
+        data_type: string
+        description: ""
+
+      - name: record_source
+        data_type: string
+        description: ""
+
+      - name: load_date
+        data_type: timestamp
+        description: ""
+
+      - name: effective_from
+        data_type: timestamp
+        description: ""
+
+      - name: transaction_pk
+        data_type: binary
+        description: ""
+
+      - name: customer_pk
+        data_type: binary
+        description: ""
+
+      - name: order_pk
+        data_type: binary
+        description: ""

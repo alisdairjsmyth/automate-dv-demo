@@ -1,0 +1,273 @@
+version: 2
+
+anchors:
+  - &link_src_pk
+      name: src_pk                    # Must be overwritten by merge
+      data_type: binary
+      constraints:
+        - type: primary_key
+          warn_unenforced: false
+        - type: not_null
+      data_tests:
+        - not_null
+        - unique
+
+  - &link_src_nk
+      name: src_nk                    # Must be overwritten by merge
+      data_type: binary
+      constraints:                    # Must be overwritten by merge
+        - type: not_null
+        - type: foreign_key           # Must be overwritten by merge
+          to: relation                # Must be overwritten by merge
+          to_columns: list_of_columns # Must be overwritten by merge
+          warn_unenforced: false      # Must be overwritten by merge
+      data_tests:                     # Must be overwritten by merge
+        - relationships:              # Must be overwritten by merge
+            arguments:                # Must be overwritten by merge
+              to: relation            # Must be overwritten by merge
+              field: column           # Must be overwritten by merge
+
+  - &link_src_ldts
+      name: load_date
+      description: "Date record was loaded"
+      data_type: date
+      constraints:
+        - type: not_null
+
+  - &link_src_source
+      name: record_source
+      description: "The source of the record"
+      data_type: string
+      constraints:
+        - type: not_null
+
+models:
+  - name: link_customer_nation
+    columns:
+      - <<: *link_src_pk
+        name: link_customer_nation_pk
+        description: "Internal hashed column of customer key and customer nation key"
+      - <<: *link_src_nk
+        name: customer_pk
+        description: "Internal hashed column of customer key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_customer')
+            to_columns: [customer_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_customer')
+                field: customer_pk
+      - <<: *link_src_nk
+        name: nation_pk
+        description: "Internal hashed column of nation key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_nation')
+            to_columns: [nation_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_nation')
+                field: nation_pk
+      - *link_src_ldts
+      - *link_src_source
+  - name: link_customer_order
+    columns:
+      - <<: *link_src_pk
+        name: order_customer_pk
+        description: "Internal hashed column of customer key and order key"
+      - <<: *link_src_nk
+        name: customer_pk
+        description: "Internal hashed column of customer key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_customer')
+            to_columns: [customer_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_customer')
+                field: customer_pk
+      - <<: *link_src_nk
+        name: order_pk
+        description: "Internal hashed column of order key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_order')
+            to_columns: [order_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_order')
+                field: order_pk
+      - *link_src_ldts
+      - *link_src_source
+  - name: link_inventory_allocation
+    columns:
+      - <<: *link_src_pk
+        name: inventory_allocation_pk
+        description: "Internal hashed column of order line number, part key and supplier key"
+      - <<: *link_src_nk
+        name: part_pk
+        description: "Internal hashed column of part key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_part')
+            to_columns: [part_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_part')
+                field: part_pk
+      - <<: *link_src_nk
+        name: supplier_pk
+        description: "Internal hashed column of supplier key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_supplier')
+            to_columns: [supplier_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_supplier')
+                field: supplier_pk
+      - <<: *link_src_nk
+        name: lineitem_pk
+        description: "Internal hashed column of order key and order line number"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_lineitem')
+            to_columns: [lineitem_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_lineitem')
+                field: lineitem_pk
+      - *link_src_ldts
+      - *link_src_source
+  - name: link_inventory
+    columns:
+      - <<: *link_src_pk
+        name: inventory_pk
+        description: "Internal hashed column of part key and supplier key"
+      - <<: *link_src_nk
+        name: supplier_pk
+        description: "Internal hashed column of supplier key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_supplier')
+            to_columns: [supplier_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_supplier')
+                field: supplier_pk
+      - <<: *link_src_nk
+        name: part_pk
+        description: "Internal hashed column of part key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_part')
+            to_columns: [part_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_part')
+                field: part_pk
+      - *link_src_ldts
+      - *link_src_source
+  - name: link_nation_region
+    columns:
+      - <<: *link_src_pk
+        name: nation_region_pk
+        description: "Internal hashed column of supplier nation key and supplier region key"
+      - <<: *link_src_nk
+        name: nation_pk
+        description: "Internal hashed column of nation key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_nation')
+            to_columns: [nation_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_nation')
+                field: nation_pk
+      - <<: *link_src_nk
+        name: region_pk
+        description: "Internal hashed column of region key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_region')
+            to_columns: [region_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_region')
+                field: region_pk
+      - *link_src_ldts
+      - *link_src_source
+  - name: link_order_lineitem
+    columns:
+      - <<: *link_src_pk
+        name: link_lineitem_order_pk
+        description: "Internal hashed column of order key, order key and order line number"
+      - <<: *link_src_nk
+        name: order_pk
+        description: "Internal hashed column of order key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_order')
+            to_columns: [order_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_order')
+                field: order_pk
+      - <<: *link_src_nk
+        name: lineitem_pk
+        description: "Internal hashed column of order key and order line number"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_lineitem')
+            to_columns: [lineitem_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_lineitem')
+                field: lineitem_pk
+      - *link_src_ldts
+      - *link_src_source
+  - name: link_supplier_nation
+    columns:
+      - <<: *link_src_pk
+        name: link_supplier_nation_pk
+        description: "Internal hashed column of supplier key and supplier nation key"
+      - <<: *link_src_nk
+        name: supplier_pk
+        description: "Internal hashed column of supplier key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_supplier')
+            to_columns: [supplier_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_supplier')
+                field: supplier_pk
+      - <<: *link_src_nk
+        name: nation_pk
+        description: "Internal hashed column of supplier region key"
+        constraints:
+          - type: foreign_key
+            to: ref('hub_nation')
+            to_columns: [nation_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_nation')
+                field: nation_pk
+      - *link_src_ldts
+      - *link_src_source

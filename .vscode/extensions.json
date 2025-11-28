@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        // Recommended for code formatting
+        "dorzey.vscode-sqlfluff"
+    ],
+    "unwantedRecommendations": [
+        // You can optionally list extensions that should NOT be recommended for this workspace
+    ]
+}

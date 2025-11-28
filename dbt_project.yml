@@ -1,0 +1,69 @@
+name: dbtvault_databricks_demo
+profile: dbtvault_databricks_demo
+version: '5.4.0'
+require-dbt-version: ['>=1.10.0', '<2.0.0']
+config-version: 2
+
+analysis-paths:
+  - analysis
+clean-targets:
+  - target
+seed-paths:
+  - seeds
+macro-paths:
+  - macros
+model-paths:
+  - models
+test-paths:
+  - tests
+target-path: target
+
+vars:
+  load_date: '1992-01-08'
+  hash: SHA
+  concat_string: '||'
+  null_placeholder_string: '^^'
+  hash_content_casing: 'UPPER'
+  enable_native_hashes: true
+
+flags:
+  use_materialization_v2: true
+
+models:
+  +persist_docs:
+    relation: true
+    columns: true
+  dbtvault_databricks_demo:
+    raw_stage:
+      +materialized: view
+      +tags:
+        - 'raw'
+    stage:
+      +materialized: view
+      +tags:
+        - 'stage'
+      +enabled: true
+      +contract:
+        enforced: true
+    raw_vault:
+      +materialized: incremental
+      +tags:
+        - 'raw_vault'
+      hubs:
+        +tags:
+          - 'hub'
+        +on_schema_change: fail
+        +contract:
+          enforced: true
+      links:
+        +tags:
+          - 'link'
+        +on_schema_change: fail
+        +contract:
+          enforced: true
+      sats:
+        +tags:
+          - 'satellite'
+      t_links:
+        +tags:
+          - 't_link'

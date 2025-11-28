@@ -1,0 +1,75 @@
+version: 2
+
+anchors:
+  - &t_link_src_pk
+      name: src_pk                    # Must be overwritten by merge
+      data_type: binary
+      constraints:
+        - type: not_null
+
+  - &t_link_src_fk
+      name: src_fk                    # Must be overwritten by merge
+      data_type: binary
+      constraints:                    # Must be overwritten by merge
+        - type: not_null
+        - type: foreign_key           # Must be overwritten by merge
+          to: relation                # Must be overwritten by merge
+          to_columns: list_of_columns # Must be overwritten by merge
+          warn_unenforced: false
+      data_tests:                     # Must be overwritten by merge
+        - relationships:              # Must be overwritten by merge
+            arguments:                # Must be overwritten by merge
+              to: relation            # Must be overwritten by merge
+              field: column           # Must be overwritten by merge
+
+  - &t_link_src_eff
+      name: effective_from
+      description: "Effective date of record"
+      data_type: date
+      constraints:
+        - type: not_null
+
+  - &t_link_src_ldts
+      name: load_date
+      description: "Date record was loaded"
+      data_type: date
+      constraints:
+        - type: not_null
+
+  - &t_link_src_source
+      name: record_source
+      description: "Record source label"
+      data_type: string
+      constraints:
+        - type: not_null
+
+models:
+  - name: t_link_transactions
+    columns:
+      - <<: *t_link_src_pk
+        name: transaction_pk
+      - <<: *t_link_src_fk
+        name: customer_pk
+        constraints:
+          - type: foreign_key
+            to: ref('hub_customer')
+            to_columns: [customer_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_customer')
+                field: customer_pk
+      - <<: *t_link_src_fk
+        name: order_pk
+        constraints:
+          - type: foreign_key
+            to: ref('hub_order')
+            to_columns: [order_pk]
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('hub_order')
+                field: order_pk
+      - *t_link_src_eff
+      - *t_link_src_ldts
+      - *t_link_src_source
