@@ -11,6 +11,7 @@ profiles.yml
 .DS_Store
 
 .user.yml
+.vscode/settings.json
 
 .ruff_cache
 __pycache__
