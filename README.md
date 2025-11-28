@@ -6,9 +6,12 @@ the creation of a Data Vault 2.0 Data Warehouse in Databricks based on the Datab
 It has been updated:
 * To persist dbt documentation in Unity Catalog
 * To utilise native hashes (binary rather than string)
-* To implement datacContracts for hub and link materialisations
+* To implement Data Contracts for hub and link materialisations
 * To include Constraints definitions of primary keys and foreign keys - so they are reflected in Unity Catalog
 * To include Data Tests to verify integrity of primary keys and foreign keys
+* To implement snake case naming convention for object and column names
+* To apply dbt linting
+* To include pre-commit hooks
 
 ---
 
@@ -20,7 +23,7 @@ Click the button above to read the latest AutomateDV docs.
 A step-by-step user guide for using this demo is available [here](https://automate-dv.readthedocs.io/en/latest/worked_example/)
 
 ---
-[dbt](https://www.getdbt.com/) is a registered trademark of dbt Labs).
+[dbt](https://www.getdbt.com/) is a registered trademark of dbt Labs.
 
 Check them out below:
 
