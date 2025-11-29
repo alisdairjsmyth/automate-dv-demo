@@ -1,7 +1,8 @@
 {
     "recommendations": [
         // Recommended for code formatting
-        "dorzey.vscode-sqlfluff"
+        "dorzey.vscode-sqlfluff",
+        "redhat.vscode-yaml"
     ],
     "unwantedRecommendations": [
         // You can optionally list extensions that should NOT be recommended for this workspace
