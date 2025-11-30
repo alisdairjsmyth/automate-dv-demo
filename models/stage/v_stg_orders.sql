@@ -90,21 +90,23 @@ hashed_columns:
       - 'totalprice'
 {%- endset -%}
 
-{% set metadata_dict   = fromyaml(yaml_metadata) %}
-{% set source_model    = metadata_dict['source_model'] %}
-{% set derived_columns = metadata_dict['derived_columns'] %}
-{% set hashed_columns  = metadata_dict['hashed_columns'] %}
+{% set metadata_dict = fromyaml(yaml_metadata) %}
+{% set source_model = metadata_dict["source_model"] %}
+{% set derived_columns = metadata_dict["derived_columns"] %}
+{% set hashed_columns = metadata_dict["hashed_columns"] %}
 
-WITH staging AS (
-{{ automate_dv.stage(
-      include_source_columns=true,
-      source_model=source_model,
-      derived_columns=derived_columns,
-      hashed_columns=hashed_columns,
-      ranked_columns=none) }}
-)
+with
+    staging as (
+        {{
+            automate_dv.stage(
+                include_source_columns=true,
+                source_model=source_model,
+                derived_columns=derived_columns,
+                hashed_columns=hashed_columns,
+                ranked_columns=none,
+            )
+        }}
+    )
 
-SELECT
-    *,
-    TO_DATE('{{ var('load_date') }}') AS load_date
-FROM staging
+select *, to_date('{{ var("load_date") }}') as load_date
+from staging
