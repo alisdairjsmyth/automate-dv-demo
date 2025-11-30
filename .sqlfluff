@@ -2,8 +2,9 @@
 templater = dbt
 dialect = databricks
 runaway_limit = 10
-max_line_length = 80
+max_line_length = 88
 indent_unit = space
+exclude_rules = layout.indent, layout.cte_bracket, layout.keyword_newline, layout.cte_newline, layout.select_targets, layout.spacing
 
 [sqlfluff:templater:dbt]
 profiles_dir = .
@@ -16,7 +17,7 @@ spacing_before = touch
 line_position = trailing
 
 [sqlfluff:rules:capitalisation.keywords]
-capitalisation_policy = upper
+capitalisation_policy = lower
 
 [sqlfluff:rules:aliasing.table]
 aliasing = explicit
@@ -38,3 +39,6 @@ capitalisation_policy = lower
 
 [sqlfluff:rules:ambiguous.column_references]
 group_by_and_order_by_style = explicit
+
+[sqlfluff:rules:convention.terminator]
+multiline_newline = True
