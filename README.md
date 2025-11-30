@@ -3,15 +3,15 @@
 This is an example dbt project, based on the downloaded project [AutomateDV](https://github.com/Datavault-UK/automate-dv), demonstrating
 the creation of a Data Vault 2.0 Data Warehouse in Databricks based on the Databricks TPC-H sample dataset.
 
-It has been updated:
-* To persist dbt documentation in Unity Catalog
-* To utilise native hashes (binary rather than string)
-* To implement Data Contracts for hub and link materialisations
-* To include Constraints definitions of primary keys and foreign keys - so they are reflected in Unity Catalog
-* To include Data Tests to verify integrity of primary keys and foreign keys
-* To implement snake case naming convention for object and column names
-* To apply dbt linting
-* To include pre-commit hooks
+It has been updated to:
+* persist dbt documentation in Unity Catalog
+* utilise native hashes (binary rather than string)
+* implement Data Contracts for hub and link materialisations
+* include Constraints definitions of primary keys and foreign keys - so they are reflected in Unity Catalog
+* include Data Tests to verify integrity of primary keys and foreign keys
+* implement snake case naming convention for object and column names
+* apply dbt formatting and linting
+* include pre-commit hooks
 
 ---
 
