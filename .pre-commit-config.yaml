@@ -3,9 +3,9 @@ repos:
     rev: v4.5.0
     hooks:
       - id: check-yaml
+      - id: check-toml
       - id: end-of-file-fixer
       - id: trailing-whitespace
-      - id: requirements-txt-fixer
   - repo: https://github.com/tconbeer/sqlfmt
     rev: v0.28.2
     hooks:
