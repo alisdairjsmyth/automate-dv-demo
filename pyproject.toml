@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages]
+find = {}
+
+[project]
+name = "automate-dv-demo"
+dynamic = ["version"]
+description = "This is an example dbt project demonstrating the creation of a Data Vault 2.0 Data Warehouse in Databricks based on the Databricks TPC-H sample dataset."
+readme = "README.md"
+authors = [{ name = "Alisdair Smyth", email = "alisdair.smyth@gmail.com" }]
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+keywords = ["dbt", "databricks", "automate-dv", "sql"]
+dependencies = [
+    "dbt-databricks>=1.10.0, <1.11.0",
+]
+
+[project.urls]
+homepage = "https://github.com/alisdairjsmyth/automate-dv-demo"
+issues = "https://github.com/alisdairjsmyth/automate-dv-demo/issues"
+repository = "https://github.com/alisdairjsmyth/automate-dv-demo"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "pre-commit",
+    "shandy-sqlfmt[jinjafmt]",
+    "sqlfluff",
+    "sqlfluff-templater-dbt",
+]

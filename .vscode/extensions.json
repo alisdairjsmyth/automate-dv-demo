@@ -2,7 +2,9 @@
     "recommendations": [
         // Recommended for code formatting
         "dorzey.vscode-sqlfluff",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "ms-python.black-formatter",
+        "tamasfe.even-better-toml",
     ],
     "unwantedRecommendations": [
         // You can optionally list extensions that should NOT be recommended for this workspace

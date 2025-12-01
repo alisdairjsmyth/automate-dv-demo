@@ -3,6 +3,7 @@ venv
 .env
 env
 
+automate_dv_demo.egg-info/
 target/
 dbt_packages/
 logs/
