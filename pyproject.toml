@@ -31,3 +31,64 @@ dev = [
     "sqlfluff",
     "sqlfluff-templater-dbt",
 ]
+
+# --- SQLFluff Configuration ---
+# Per dbtonic linting rules - https://docs.getdbt.com/docs/cloud/dbt-cloud-ide/lint-format#configure-dbtonic-linting-rules
+# Updates for sqlfmt compatibility - https://sqlfmt.com/docs/integrations/sqlfluffhttps://sqlfmt.com/docs/integrations/sqlfluff
+[tool.sqlfluff.core]
+templater = "dbt"
+dialect = "databricks"
+runaway_limit = 10
+max_line_length = 88
+indent_unit = "space"
+# Included to be compatible with sqlfmt
+exclude_rules = [
+    "layout.indent",
+    "layout.cte_bracket",
+    "layout.keyword_newline",
+    "layout.cte_newline",
+    "layout.select_targets",
+    "layout.spacing"
+]
+
+[tool.sqlfluff.templater.dbt]
+profiles_dir = "."
+
+[tool.sqlfluff.indentation]
+tab_space_size = 4
+
+[tool.sqlfluff.layout.type.comma]
+spacing_before = "touch"
+line_position = "trailing"
+
+[sqlfluff.rules.capitalisation.keywords]
+capitalisation_policy = "lower"
+
+[sqlfluff.rules.aliasing.table]
+aliasing = "explicit"
+
+[sqlfluff.rules.aliasing.column]
+aliasing = "explicit"
+
+[sqlfluff.rules.aliasing.expression]
+allow_scalar = false
+
+[sqlfluff.rules.capitalisation.identifiers]
+extended_capitalisation_policy = "lower"
+
+[sqlfluff.rules.capitalisation.functions]
+capitalisation_policy = "lower"
+
+[sqlfluff.rules.capitalisation.literals]
+capitalisation_policy = "lower"
+
+[sqlfluff.rules.ambiguous.column_references]
+group_by_and_order_by_style = "implicit"
+
+# Included to be compatible with sqlfmt
+[sqlfluff.rules.convention.terminator]
+multiline_newline = true
+
+[tool.sqlfmt]
+line_length = 88
+check = true
