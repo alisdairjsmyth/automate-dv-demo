@@ -91,4 +91,4 @@ multiline_newline = true
 
 [tool.sqlfmt]
 line_length = 88
-check = true
+exclude = ["target/**/*", "dbt_packages/**/*"]
