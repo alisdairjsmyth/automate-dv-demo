@@ -37,6 +37,13 @@ models:
     relation: true
     columns: true
 
+  dbt_artifacts:
+    +schema: dbt_artifacts
+    staging:
+      +schema: dbt_artifacts_private
+    sources:
+      +schema: dbt_artifacts_private
+
   dbtvault_databricks_demo:
     raw_stage:
       +schema: dp_dv_demo_private
@@ -78,3 +85,7 @@ models:
       +enabled: true
       +contract:
         enforced: true
+
+on-run-end:
+  # Upload dbt Artifacts results at the end of the run
+  - "{{ dbt_artifacts.upload_results(results) }}"
