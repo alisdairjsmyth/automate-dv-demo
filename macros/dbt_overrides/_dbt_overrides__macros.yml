@@ -1,0 +1,8 @@
+version: 2
+
+macros:
+  - name: generate_schema_name
+    description: >-
+      A macro to override default behaviour of schema names in DBT. This macro will
+      not be used directly. Schemas will default to the profile schema name unless a
+      schema is provided, in whch it will use that schema name exactly.

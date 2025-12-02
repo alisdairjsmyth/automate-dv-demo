@@ -39,11 +39,13 @@ models:
 
   dbtvault_databricks_demo:
     raw_stage:
+      +schema: dp_dv_demo_private
       +materialized: view
       +tags:
         - 'raw'
 
     raw_vault:
+      +schema: dp_dv_demo
       +materialized: incremental
       +tags:
         - 'raw_vault'
@@ -69,6 +71,7 @@ models:
           - 't_link'
 
     stage:
+      +schema: dp_dv_demo_private
       +materialized: view
       +tags:
         - 'stage'
