@@ -25,7 +25,7 @@ repository = "https://github.com/alisdairjsmyth/automate-dv-demo"
 
 [project.optional-dependencies]
 dev = [
-    "black",
+    "ruff",
     "pre-commit",
     "shandy-sqlfmt[jinjafmt]",
     "sqlfluff",
@@ -89,6 +89,7 @@ group_by_and_order_by_style = "implicit"
 [sqlfluff.rules.convention.terminator]
 multiline_newline = true
 
+# --- sqlfmt Configuration ---
 [tool.sqlfmt]
 line_length = 88
 exclude = ["target/**/*", "dbt_packages/**/*"]

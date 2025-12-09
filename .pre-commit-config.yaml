@@ -16,4 +16,13 @@ repos:
     rev: 3.5.0
     hooks:
       - id: sqlfluff-lint
-        additional_dependencies: ['dbt-databricks==1.11.2', 'sqlfluff-templater-dbt']
+        additional_dependencies: ['dbt-databricks>=1.10.0, <1.11.0', 'sqlfluff-templater-dbt']
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.14.2
+    hooks:
+      # Run the linter.
+      - id: ruff
+        args: [--fix]
+      # Run the formatter.
+      - id: ruff-format
