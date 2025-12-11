@@ -34,7 +34,7 @@ select
     customer_nation.n_regionkey as customer_region_key,
     customer_nation.n_comment as customer_nation_comment,
     customer_region.r_name as customer_region_name,
-    customer_region.r_comment as customer_region_comment
+    customer_region.r_comment as customer_region_comment,
 from {{ source("tpch_sample", "orders") }} as orders
 left join
     {{ source("tpch_sample", "lineitem") }} as lineitem

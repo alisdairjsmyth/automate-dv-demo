@@ -18,7 +18,7 @@ select
     ) as transaction_number,
     case
         abs(mod(random(1), 2)) + 1 when 1 then 'DR' when 2 then 'CR'
-    end as transaction_type
+    end as transaction_type,
 from {{ source("tpch_sample", "orders") }} as orders
 left join
     {{ source("tpch_sample", "customer") }} as customer

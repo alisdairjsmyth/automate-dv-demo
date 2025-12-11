@@ -22,7 +22,7 @@ select
     nation.n_comment as supplier_nation_comment,
     nation.n_regionkey as supplier_region_key,
     region.r_name as supplier_region_name,
-    region.r_comment as supplier_region_comment
+    region.r_comment as supplier_region_comment,
 from {{ source("tpch_sample", "partsupp") }} as partsupp
 left join
     {{ source("tpch_sample", "supplier") }} as supplier

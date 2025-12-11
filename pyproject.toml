@@ -87,6 +87,9 @@ capitalisation_policy = "lower"
 [tool.sqlfluff.rules.ambiguous.column_references]
 group_by_and_order_by_style = "implicit"
 
+[tool.sqlfluff.rules.convention.select_trailing_comma]
+select_clause_trailing_comma = "require"
+
 # Included to be compatible with sqlfmt
 [tool.sqlfluff.rules.convention.terminator]
 multiline_newline = true
