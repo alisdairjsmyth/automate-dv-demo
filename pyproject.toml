@@ -87,6 +87,10 @@ capitalisation_policy = "lower"
 [tool.sqlfluff.rules.ambiguous.column_references]
 group_by_and_order_by_style = "implicit"
 
+[tool.sqlfluff.rules.convention.not_equal]
+# Require != over <> for not equal
+preferred_not_equal_style = "c_style"
+
 [tool.sqlfluff.rules.convention.select_trailing_comma]
 select_clause_trailing_comma = "require"
 
