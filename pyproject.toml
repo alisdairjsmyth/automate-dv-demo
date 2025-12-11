@@ -46,7 +46,6 @@ exclude_rules = [
     "layout.indent",
     "layout.cte_bracket",
     "layout.keyword_newline",
-    "layout.cte_newline",
     "layout.select_targets",
     "layout.spacing"
 ]
@@ -61,32 +60,32 @@ tab_space_size = 4
 spacing_before = "touch"
 line_position = "trailing"
 
-[sqlfluff.rules.capitalisation.keywords]
+[tool.sqlfluff.rules.capitalisation.keywords]
 capitalisation_policy = "lower"
 
-[sqlfluff.rules.aliasing.table]
+[tool.sqlfluff.rules.aliasing.table]
 aliasing = "explicit"
 
-[sqlfluff.rules.aliasing.column]
+[tool.sqlfluff.rules.aliasing.column]
 aliasing = "explicit"
 
-[sqlfluff.rules.aliasing.expression]
+[tool.sqlfluff.rules.aliasing.expression]
 allow_scalar = false
 
-[sqlfluff.rules.capitalisation.identifiers]
+[tool.sqlfluff.rules.capitalisation.identifiers]
 extended_capitalisation_policy = "lower"
 
-[sqlfluff.rules.capitalisation.functions]
+[tool.sqlfluff.rules.capitalisation.functions]
 capitalisation_policy = "lower"
 
-[sqlfluff.rules.capitalisation.literals]
+[tool.sqlfluff.rules.capitalisation.literals]
 capitalisation_policy = "lower"
 
-[sqlfluff.rules.ambiguous.column_references]
+[tool.sqlfluff.rules.ambiguous.column_references]
 group_by_and_order_by_style = "implicit"
 
 # Included to be compatible with sqlfmt
-[sqlfluff.rules.convention.terminator]
+[tool.sqlfluff.rules.convention.terminator]
 multiline_newline = true
 
 # --- sqlfmt Configuration ---
