@@ -6,11 +6,9 @@ select
     dateadd(day, 20, orders.o_orderdate) as transaction_date,
     to_number(
         rpad(
-            concat(
-                orders.o_orderkey,
-                orders.o_custkey,
-                to_char(orders.o_orderdate, 'yyyyMMdd')
-            ),
+            orders.o_orderkey
+            || orders.o_custkey
+            || to_char(orders.o_orderdate, 'yyyyMMdd'),
             24,
             '0'
         ),
