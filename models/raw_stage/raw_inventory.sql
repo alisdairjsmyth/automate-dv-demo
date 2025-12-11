@@ -32,4 +32,3 @@ inner join
     {{ ref("raw_orders") }} as f
     on a.ps_partkey = f.partkey
     and a.ps_suppkey = f.supplierkey
-order by partkey, supplierkey
