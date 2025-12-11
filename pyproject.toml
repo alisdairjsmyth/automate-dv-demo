@@ -38,9 +38,7 @@ dev = [
 [tool.sqlfluff.core]
 templater = "dbt"
 dialect = "databricks"
-runaway_limit = 10
 max_line_length = 88
-indent_unit = "space"
 # Included to be compatible with sqlfmt
 exclude_rules = [
     "layout.indent",
@@ -53,27 +51,8 @@ exclude_rules = [
 [tool.sqlfluff.templater.dbt]
 profiles_dir = "."
 
-[tool.sqlfluff.indentation]
-tab_space_size = 4
-
-[tool.sqlfluff.layout.type.comma]
-spacing_before = "touch"
-line_position = "trailing"
-
 [tool.sqlfluff.rules.capitalisation.keywords]
 capitalisation_policy = "lower"
-
-[tool.sqlfluff.rules.aliasing.table]
-aliasing = "explicit"
-
-[tool.sqlfluff.rules.aliasing.column]
-aliasing = "explicit"
-
-[tool.sqlfluff.rules.aliasing.length]
-min_alias_length = 4
-
-[tool.sqlfluff.rules.aliasing.expression]
-allow_scalar = false
 
 [tool.sqlfluff.rules.capitalisation.identifiers]
 extended_capitalisation_policy = "lower"
@@ -86,6 +65,12 @@ capitalisation_policy = "lower"
 
 [tool.sqlfluff.rules.ambiguous.column_references]
 group_by_and_order_by_style = "implicit"
+
+[tool.sqlfluff.rules.aliasing.length]
+min_alias_length = 4
+
+[tool.sqlfluff.rules.aliasing.expression]
+allow_scalar = false
 
 [tool.sqlfluff.rules.convention.not_equal]
 # Require != over <> for not equal
