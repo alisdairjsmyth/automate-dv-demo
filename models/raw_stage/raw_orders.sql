@@ -1,47 +1,62 @@
 select
-    a.l_orderkey as orderkey,
-    a.l_partkey as partkey,
-    a.l_suppkey as supplierkey,
-    a.l_linenumber as linenumber,
-    a.l_quantity as quantity,
-    a.l_extendedprice as extendedprice,
-    a.l_discount as discount,
-    a.l_tax as tax,
-    a.l_returnflag as returnflag,
-    a.l_linestatus as linestatus,
-    a.l_shipdate as shipdate,
-    a.l_commitdate as commitdate,
-    a.l_receiptdate as receiptdate,
-    a.l_shipinstruct as shipinstruct,
-    a.l_shipmode as shipmode,
-    a.l_comment as line_comment,
-    b.o_custkey as customerkey,
-    b.o_orderstatus as orderstatus,
-    b.o_totalprice as totalprice,
-    b.o_orderdate as orderdate,
-    b.o_orderpriority as orderpriority,
-    b.o_clerk as clerk,
-    b.o_shippriority as shippriority,
-    b.o_comment as order_comment,
-    c.c_name as customer_name,
-    c.c_address as customer_address,
-    c.c_nationkey as customer_nation_key,
-    c.c_phone as customer_phone,
-    c.c_acctbal as customer_accbal,
-    c.c_mktsegment as customer_mktsegment,
-    c.c_comment as customer_comment,
-    d.n_name as customer_nation_name,
-    d.n_regionkey as customer_region_key,
-    d.n_comment as customer_nation_comment,
-    e.r_name as customer_region_name,
-    e.r_comment as customer_region_comment
-from {{ source("tpch_sample", "orders") }} as b
-left join {{ source("tpch_sample", "lineitem") }} as a on b.o_orderkey = a.l_orderkey
-left join {{ source("tpch_sample", "customer") }} as c on b.o_custkey = c.c_custkey
-left join {{ source("tpch_sample", "nation") }} as d on c.c_nationkey = d.n_nationkey
-left join {{ source("tpch_sample", "region") }} as e on d.n_regionkey = e.r_regionkey
-left join {{ source("tpch_sample", "part") }} as g on a.l_partkey = g.p_partkey
-left join {{ source("tpch_sample", "supplier") }} as h on a.l_suppkey = h.s_suppkey
-left join {{ source("tpch_sample", "nation") }} as j on h.s_nationkey = j.n_nationkey
-left join {{ source("tpch_sample", "region") }} as k on j.n_regionkey = k.r_regionkey
-where b.o_orderdate = to_date('{{ var("load_date") }}')
+    orders.l_orderkey as orderkey,
+    orders.l_partkey as partkey,
+    orders.l_suppkey as supplierkey,
+    orders.l_linenumber as linenumber,
+    orders.l_quantity as quantity,
+    orders.l_extendedprice as extendedprice,
+    orders.l_discount as discount,
+    orders.l_tax as tax,
+    orders.l_returnflag as returnflag,
+    orders.l_linestatus as linestatus,
+    orders.l_shipdate as shipdate,
+    orders.l_commitdate as commitdate,
+    orders.l_receiptdate as receiptdate,
+    orders.l_shipinstruct as shipinstruct,
+    orders.l_shipmode as shipmode,
+    orders.l_comment as line_comment,
+    lineitem.o_custkey as customerkey,
+    lineitem.o_orderstatus as orderstatus,
+    lineitem.o_totalprice as totalprice,
+    lineitem.o_orderdate as orderdate,
+    lineitem.o_orderpriority as orderpriority,
+    lineitem.o_clerk as clerk,
+    lineitem.o_shippriority as shippriority,
+    lineitem.o_comment as order_comment,
+    customer.c_name as customer_name,
+    customer.c_address as customer_address,
+    customer.c_nationkey as customer_nation_key,
+    customer.c_phone as customer_phone,
+    customer.c_acctbal as customer_accbal,
+    customer.c_mktsegment as customer_mktsegment,
+    customer.c_comment as customer_comment,
+    customer_nation.n_name as customer_nation_name,
+    customer_nation.n_regionkey as customer_region_key,
+    customer_nation.n_comment as customer_nation_comment,
+    customer_region.r_name as customer_region_name,
+    customer_region.r_comment as customer_region_comment
+from {{ source("tpch_sample", "orders") }} as orders
+left join
+    {{ source("tpch_sample", "lineitem") }} as lineitem
+    on orders.l_orderkey = lineitem.o_orderkey
+left join
+    {{ source("tpch_sample", "customer") }} as customer
+    on lineitem.o_custkey = customer.c_custkey
+left join
+    {{ source("tpch_sample", "nation") }} as customer_nation
+    on customer.c_nationkey = customer_nation.n_nationkey
+left join
+    {{ source("tpch_sample", "region") }} as customer_region
+    on customer_nation.n_regionkey = customer_region.r_regionkey
+left join
+    {{ source("tpch_sample", "part") }} as part on orders.l_partkey = part.p_partkey
+left join
+    {{ source("tpch_sample", "supplier") }} as supplier
+    on orders.l_suppkey = supplier.s_suppkey
+left join
+    {{ source("tpch_sample", "nation") }} as supplier_nation
+    on supplier.s_nationkey = supplier_nation.n_nationkey
+left join
+    {{ source("tpch_sample", "region") }} as supplier_region
+    on supplier_nation.n_regionkey = supplier_region.r_regionkey
+where lineitem.o_orderdate = to_date('{{ var("load_date") }}')

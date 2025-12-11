@@ -69,6 +69,9 @@ aliasing = "explicit"
 [tool.sqlfluff.rules.aliasing.column]
 aliasing = "explicit"
 
+[tool.sqlfluff.rules.aliasing.length]
+min_alias_length = 4
+
 [tool.sqlfluff.rules.aliasing.expression]
 allow_scalar = false
 
